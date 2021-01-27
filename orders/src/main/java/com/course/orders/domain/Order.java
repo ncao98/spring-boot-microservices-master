@@ -39,4 +39,7 @@ public class Order {
         this.id = id;
         this.paidTotal = paidTotal;
     }
+
+    public Order(){}
+    
 }
