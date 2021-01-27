@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Microservice Client</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${productInstance.getName()}"></h1>
+    <img th:src="${productInstance.getIllustration()}"  class="card-img-top" />
+    <p th:text="${productInstance.getDescription()}"></p>
+    <p th:text="${productInstance.getPrice()}"></p>
+</div>
+</body>
+</html>
