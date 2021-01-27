@@ -43,6 +43,6 @@ public class CartItemBean {
 
     @Override
     public String toString() {
-        return "Cart Item :"+id+":"+productId+":"+quantity;
+        return "Cart Item :" + id + ":" + productId + ":" + quantity;
     }
 }

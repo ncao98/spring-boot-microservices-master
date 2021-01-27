@@ -19,16 +19,14 @@ public class ProductController {
     ProductRepository productRepository;
 
     @GetMapping(value = "/products")
-    public List<Product> list()
-    {
+    public List<Product> list() {
         List<Product> productList = productRepository.findAll();
 
         return productList;
     }
 
     @GetMapping(value = "/product/{id}")
-    public Optional<Product> get(@PathVariable Long id)
-    {
+    public Optional<Product> get(@PathVariable Long id) {
         Optional<Product> productInstance = productRepository.findById(id);
 
         if (!productInstance.isPresent())

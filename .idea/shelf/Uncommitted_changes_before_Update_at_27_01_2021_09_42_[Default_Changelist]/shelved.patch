@@ -1,0 +1,918 @@
+Index: product/src/main/java/com/course/product/domain/Product.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.course.product.domain;\r\n\r\nimport javax.persistence.Entity;\r\nimport javax.persistence.GeneratedValue;\r\nimport javax.persistence.Id;\r\n\r\n@Entity\r\npublic class Product {\r\n\r\n    @Id\r\n    @GeneratedValue\r\n    private Long id;\r\n\r\n    private String name;\r\n\r\n    private String description;\r\n\r\n    private String illustration;\r\n\r\n    private Double price;\r\n\r\n\r\n    public Product(){}\r\n\r\n    public Product(Long id, String name, String description, String illustration, Double price) {\r\n        this.id = id;\r\n        this.name = name;\r\n        this.description = description;\r\n        this.illustration = illustration;\r\n        this.price = price;\r\n    }\r\n\r\n    public Long getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(Long id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public void setName(String name) {\r\n        this.name = name;\r\n    }\r\n\r\n    public String getDescription() {\r\n        return description;\r\n    }\r\n\r\n    public void setDescription(String description) {\r\n        this.description = description;\r\n    }\r\n\r\n    public String getIllustration() {\r\n        return illustration;\r\n    }\r\n\r\n    public void setIllustration(String illustration) {\r\n        this.illustration = illustration;\r\n    }\r\n\r\n    public Double getPrice() {\r\n        return price;\r\n    }\r\n\r\n    public void setPrice(Double price) {\r\n        this.price = price;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return id+\":\"+name;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- product/src/main/java/com/course/product/domain/Product.java	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ product/src/main/java/com/course/product/domain/Product.java	(date 1611736525923)
+@@ -20,7 +20,8 @@
+     private Double price;
+ 
+ 
+-    public Product(){}
++    public Product() {
++    }
+ 
+     public Product(Long id, String name, String description, String illustration, Double price) {
+         this.id = id;
+@@ -72,6 +73,6 @@
+ 
+     @Override
+     public String toString() {
+-        return id+":"+name;
++        return id + ":" + name;
+     }
+ }
+Index: product/src/main/java/com/course/product/controllers/ProductController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.course.product.controllers;\r\n\r\nimport com.course.product.domain.Product;\r\nimport com.course.product.repositories.ProductRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.PathVariable;\r\nimport org.springframework.web.bind.annotation.RestController;\r\nimport org.springframework.web.server.ResponseStatusException;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n@RestController\r\npublic class ProductController {\r\n\r\n    @Autowired\r\n    ProductRepository productRepository;\r\n\r\n    @GetMapping(value = \"/products\")\r\n    public List<Product> list()\r\n    {\r\n        List<Product> productList = productRepository.findAll();\r\n\r\n        return productList;\r\n    }\r\n\r\n    @GetMapping(value = \"/product/{id}\")\r\n    public Optional<Product> get(@PathVariable Long id)\r\n    {\r\n        Optional<Product> productInstance = productRepository.findById(id);\r\n\r\n        if (!productInstance.isPresent())\r\n            throw new ResponseStatusException(HttpStatus.NOT_FOUND, \"Specified product doesn't exist\");\r\n\r\n        return productInstance;\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- product/src/main/java/com/course/product/controllers/ProductController.java	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ product/src/main/java/com/course/product/controllers/ProductController.java	(date 1611736525996)
+@@ -19,16 +19,14 @@
+     ProductRepository productRepository;
+ 
+     @GetMapping(value = "/products")
+-    public List<Product> list()
+-    {
++    public List<Product> list() {
+         List<Product> productList = productRepository.findAll();
+ 
+         return productList;
+     }
+ 
+     @GetMapping(value = "/product/{id}")
+-    public Optional<Product> get(@PathVariable Long id)
+-    {
++    public Optional<Product> get(@PathVariable Long id) {
+         Optional<Product> productInstance = productRepository.findById(id);
+ 
+         if (!productInstance.isPresent())
+Index: product/src/main/resources/data.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>INSERT INTO PRODUCT(id, name , description, illustration, price) values\r\n(0, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(1, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(2, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(3, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(4, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(5, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(6, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(7, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),\r\n(8, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150);\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- product/src/main/resources/data.sql	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ product/src/main/resources/data.sql	(date 1611736526008)
+@@ -1,10 +1,10 @@
+-INSERT INTO PRODUCT(id, name , description, illustration, price) values
+-(0, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(1, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(2, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(3, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(4, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(5, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(6, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(7, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
+-(8, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150);
++INSERT INTO PRODUCT(id, name, description, illustration, price)
++values (0, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (1, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (2, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (3, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (4, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (5, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (6, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (7, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150),
++       (8, 'Nom de produit', 'Description qui donne envie d''acheter', 'https://picsum.photos/300/300', 150);
+Index: cart/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Setting deployment port\r\nserver.port = 8092\r\n\r\n#Setting application name\r\nspring.application.name = ms-cart\r\n\r\n#Enabling H2 console\r\nspring.h2.console.enabled=true\r\n\r\n#Show SQL requests\r\nspring.jpa.show-sql=true\r\n\r\n# Custom H2 Console URL\r\nspring.h2.console.path=/h2-console\r\n\r\n#Setting database url\r\nspring.datasource.url=jdbc:h2:mem:devDb\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- cart/src/main/resources/application.properties	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ cart/src/main/resources/application.properties	(date 1611736525957)
+@@ -1,17 +1,12 @@
+ #Setting deployment port
+-server.port = 8092
+-
++server.port=8092
+ #Setting application name
+-spring.application.name = ms-cart
+-
++spring.application.name=ms-cart
+ #Enabling H2 console
+ spring.h2.console.enabled=true
+-
+ #Show SQL requests
+ spring.jpa.show-sql=true
+-
+ # Custom H2 Console URL
+ spring.h2.console.path=/h2-console
+-
+ #Setting database url
+ spring.datasource.url=jdbc:h2:mem:devDb
+Index: .idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_11_2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2\">\r\n    <CLASSES>\r\n      <root url=\"jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.11.2/ee08bbd8975dde844307fe8309dfcd5ec7ee129d/jackson-databind-2.11.2.jar!/\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES>\r\n      <root url=\"jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.11.2/4f0c6c172892b0fb6b7f09a54cc616b9f9516bca/jackson-databind-2.11.2-sources.jar!/\" />\r\n    </SOURCES>\r\n  </library>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_11_2.xml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_11_2.xml	(date 1611736130361)
+@@ -1,5 +1,8 @@
+ <component name="libraryTable">
+   <library name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2">
++    <ANNOTATIONS>
++      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/externalAnnotations/com/fasterxml/jackson/core/jackson-databind/2.9.6-an1/jackson-databind-2.9.6-an1-annotations.zip!/" />
++    </ANNOTATIONS>
+     <CLASSES>
+       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.11.2/ee08bbd8975dde844307fe8309dfcd5ec7ee129d/jackson-databind-2.11.2.jar!/" />
+     </CLASSES>
+Index: product/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Setting deployment port\r\nserver.port = 8091\r\n\r\n#Setting application name\r\nspring.application.name = ms-product\r\n\r\n#Enabling H2 console\r\nspring.h2.console.enabled=true\r\n\r\n#Show SQL requests\r\nspring.jpa.show-sql=true\r\n\r\n# Custom H2 Console URL\r\nspring.h2.console.path=/h2-console\r\n\r\n#Setting database url\r\nspring.datasource.url=jdbc:h2:mem:devDb\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- product/src/main/resources/application.properties	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ product/src/main/resources/application.properties	(date 1611736526034)
+@@ -1,17 +1,12 @@
+ #Setting deployment port
+-server.port = 8091
+-
++server.port=8091
+ #Setting application name
+-spring.application.name = ms-product
+-
++spring.application.name=ms-product
+ #Enabling H2 console
+ spring.h2.console.enabled=true
+-
+ #Show SQL requests
+ spring.jpa.show-sql=true
+-
+ # Custom H2 Console URL
+ spring.h2.console.path=/h2-console
+-
+ #Setting database url
+ spring.datasource.url=jdbc:h2:mem:devDb
+Index: .idea/modules/cart.main.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module external.linked.project.id=\"cart:main\" external.linked.project.path=\"$MODULE_DIR$/../../cart\" external.root.project.path=\"$MODULE_DIR$/../../cart\" external.system.id=\"GRADLE\" external.system.module.group=\"com.course\" external.system.module.type=\"sourceSet\" external.system.module.version=\"0.0.1-SNAPSHOT\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"FacetManager\">\r\n    <facet type=\"Spring\" name=\"Spring\">\r\n      <configuration />\r\n    </facet>\r\n    <facet type=\"web\" name=\"Web\">\r\n      <configuration>\r\n        <webroots />\r\n      </configuration>\r\n    </facet>\r\n  </component>\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\r\n    <output url=\"file://$MODULE_DIR$/../../cart/build/classes/java/main\" />\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$/../../cart/src/main\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/../../cart/src/main/java\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/../../cart/src/main/resources\" type=\"java-resource\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.h2database:h2:1.4.200\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate:hibernate-core:5.4.21.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aspects:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-json:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-webmvc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-web:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-context:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aop:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.aspectj:aspectjweaver:1.9.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.zaxxer:HikariCP:3.4.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-orm:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss.logging:jboss-logging:3.4.1.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.javassist:javassist:3.24.0-GA\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.bytebuddy:byte-buddy:1.10.14\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: antlr:antlr:2.7.7\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss:jandex:2.1.3.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml:classmate:1.5.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.dom4j:dom4j:2.1.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-tx:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-beans:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-expression:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-core:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-classic:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:jul-to-slf4j:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:slf4j-api:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.yaml:snakeyaml:1.26\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish:jakarta.el:3.0.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:txw2:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.sun.istack:istack-commons-runtime:3.0.11\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jcl:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-core:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.sun.activation:jakarta.activation:1.2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-api:2.13.3\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules/cart.main.iml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/modules/cart.main.iml	(date 1611736130294)
+@@ -9,8 +9,18 @@
+         <webroots />
+       </configuration>
+     </facet>
++    <facet type="jpa" name="JPA">
++      <configuration>
++        <setting name="validation-enabled" value="true" />
++        <setting name="provider-name" value="Hibernate" />
++        <datasource-mapping>
++          <factory-entry name="entityManagerFactory" />
++        </datasource-mapping>
++        <naming-strategy-map />
++      </configuration>
++    </facet>
+   </component>
+-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
++  <component name="NewModuleRootManager">
+     <output url="file://$MODULE_DIR$/../../cart/build/classes/java/main" />
+     <exclude-output />
+     <content url="file://$MODULE_DIR$/../../cart/src/main">
+@@ -23,7 +33,6 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.hibernate:hibernate-core:5.4.21.Final" level="project" />
+@@ -34,13 +43,9 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-webmvc:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-web:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-aop:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.aspectj:aspectjweaver:1.9.6" level="project" />
+     <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:3.4.5" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final" level="project" />
+     <orderEntry type="library" name="Gradle: org.jboss.logging:jboss-logging:3.4.1.Final" level="project" />
+@@ -51,33 +56,38 @@
+     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.5.1" level="project" />
+     <orderEntry type="library" name="Gradle: org.dom4j:dom4j:2.1.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-tx:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-core:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
+     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.30" level="project" />
+-    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
+-    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
++    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish:jakarta.el:3.0.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.11" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
+     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.13.3" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
+     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.13.3" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: cart/src/main/java/com/course/cart/domain/CartItem.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.course.cart.domain;\r\n\r\nimport javax.persistence.Entity;\r\nimport javax.persistence.GeneratedValue;\r\nimport javax.persistence.Id;\r\nimport java.util.List;\r\n\r\n@Entity\r\npublic class CartItem {\r\n\r\n    @Id\r\n    @GeneratedValue\r\n    private Long id;\r\n\r\n    private Long productId;\r\n\r\n    private Integer quantity;\r\n\r\n    public CartItem() {\r\n    }\r\n\r\n    public CartItem(Long id, Long productId, Integer quantity) {\r\n        this.id = id;\r\n        this.productId = productId;\r\n        this.quantity = quantity;\r\n    }\r\n\r\n    public Long getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(Long id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public Long getProductId() {\r\n        return productId;\r\n    }\r\n\r\n    public void setProductId(Long productId) {\r\n        this.productId = productId;\r\n    }\r\n\r\n    public Integer getQuantity() {\r\n        return quantity;\r\n    }\r\n\r\n    public void setQuantity(Integer quantity) {\r\n        this.quantity = quantity;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Cart Item :\"+id+\":\"+productId+\":\"+quantity;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- cart/src/main/java/com/course/cart/domain/CartItem.java	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ cart/src/main/java/com/course/cart/domain/CartItem.java	(date 1611736525932)
+@@ -51,6 +51,6 @@
+ 
+     @Override
+     public String toString() {
+-        return "Cart Item :"+id+":"+productId+":"+quantity;
++        return "Cart Item :" + id + ":" + productId + ":" + quantity;
+     }
+ }
+Index: cart/src/main/java/com/course/cart/controllers/CartController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.course.cart.controllers;\r\n\r\nimport com.course.cart.domain.Cart;\r\nimport com.course.cart.domain.CartItem;\r\nimport com.course.cart.repositories.CartItemRepository;\r\nimport com.course.cart.repositories.CartRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.stereotype.Controller;\r\nimport org.springframework.web.bind.annotation.*;\r\nimport org.springframework.web.server.ResponseStatusException;\r\n\r\nimport javax.transaction.Transactional;\r\nimport java.util.Optional;\r\n\r\n@RestController\r\npublic class CartController {\r\n\r\n    @Autowired\r\n    CartRepository cartRepository;\r\n\r\n    @Autowired\r\n    CartItemRepository cartItemRepository;\r\n\r\n    @PostMapping(value = \"/cart\")\r\n    public ResponseEntity<Cart> createNewCart(@RequestBody Cart cartData)\r\n    {\r\n        Cart cart = cartRepository.save(new Cart());\r\n\r\n        if (cart == null)\r\n            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, \"Couldn't create a new cart\");\r\n\r\n        return new ResponseEntity<Cart>(cart, HttpStatus.CREATED);\r\n    }\r\n\r\n    @GetMapping(value = \"/cart/{id}\")\r\n    public Optional<Cart> getCart(@PathVariable Long id)\r\n    {\r\n        Optional<Cart> cart = cartRepository.findById(id);\r\n\r\n        if (cart == null)\r\n            throw new ResponseStatusException(HttpStatus.NOT_FOUND, \"Couldn't get cart\");\r\n\r\n        return cart;\r\n    }\r\n\r\n    @PostMapping(value = \"/cart/{id}\")\r\n    @Transactional\r\n    public ResponseEntity<CartItem> addProductToCart(@PathVariable Long id, @RequestBody CartItem cartItem)\r\n    {\r\n        Cart cart = cartRepository.getOne(id);\r\n\r\n        if (cart == null)\r\n            throw new ResponseStatusException(HttpStatus.NOT_FOUND, \"Couldn't get cart\");\r\n\r\n\r\n        cart.addProduct(cartItem);\r\n\r\n        cartRepository.save(cart);\r\n\r\n        return new ResponseEntity<CartItem>(cartItem, HttpStatus.CREATED);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- cart/src/main/java/com/course/cart/controllers/CartController.java	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ cart/src/main/java/com/course/cart/controllers/CartController.java	(date 1611736526020)
+@@ -24,8 +24,7 @@
+     CartItemRepository cartItemRepository;
+ 
+     @PostMapping(value = "/cart")
+-    public ResponseEntity<Cart> createNewCart(@RequestBody Cart cartData)
+-    {
++    public ResponseEntity<Cart> createNewCart(@RequestBody Cart cartData) {
+         Cart cart = cartRepository.save(new Cart());
+ 
+         if (cart == null)
+@@ -35,8 +34,7 @@
+     }
+ 
+     @GetMapping(value = "/cart/{id}")
+-    public Optional<Cart> getCart(@PathVariable Long id)
+-    {
++    public Optional<Cart> getCart(@PathVariable Long id) {
+         Optional<Cart> cart = cartRepository.findById(id);
+ 
+         if (cart == null)
+@@ -47,8 +45,7 @@
+ 
+     @PostMapping(value = "/cart/{id}")
+     @Transactional
+-    public ResponseEntity<CartItem> addProductToCart(@PathVariable Long id, @RequestBody CartItem cartItem)
+-    {
++    public ResponseEntity<CartItem> addProductToCart(@PathVariable Long id, @RequestBody CartItem cartItem) {
+         Cart cart = cartRepository.getOne(id);
+ 
+         if (cart == null)
+Index: .idea/modules/cart.test.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module external.linked.project.id=\"cart:test\" external.linked.project.path=\"$MODULE_DIR$/../../cart\" external.root.project.path=\"$MODULE_DIR$/../../cart\" external.system.id=\"GRADLE\" external.system.module.group=\"com.course\" external.system.module.type=\"sourceSet\" external.system.module.version=\"0.0.1-SNAPSHOT\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"FacetManager\">\r\n    <facet type=\"Spring\" name=\"Spring\">\r\n      <configuration />\r\n    </facet>\r\n    <facet type=\"web\" name=\"Web\">\r\n      <configuration>\r\n        <webroots />\r\n        <sourceRoots />\r\n      </configuration>\r\n    </facet>\r\n  </component>\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\r\n    <output-test url=\"file://$MODULE_DIR$/../../cart/build/classes/java/test\" />\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$/../../cart/src/test\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/../../cart/src/test/java\" isTestSource=\"true\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"module\" module-name=\"cart.main\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.h2database:h2:1.4.200\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate:hibernate-core:5.4.21.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aspects:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-json:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-webmvc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-web:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-test-autoconfigure:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-test:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.jayway.jsonpath:json-path:2.4.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.assertj:assertj-core:3.16.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hamcrest:hamcrest:2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.jupiter:junit-jupiter-params:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.platform:junit-platform-commons:1.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.jupiter:junit-jupiter:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.mockito:mockito-junit-jupiter:3.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.mockito:mockito-core:3.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.skyscreamer:jsonassert:1.5.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: org.junit.platform:junit-platform-engine:1.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-test:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-context:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aop:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-orm:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-tx:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-beans:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-expression:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-core:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.xmlunit:xmlunit-core:2.7.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.aspectj:aspectjweaver:1.9.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.zaxxer:HikariCP:3.4.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss.logging:jboss-logging:3.4.1.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.javassist:javassist:3.24.0-GA\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.bytebuddy:byte-buddy:1.10.14\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: antlr:antlr:2.7.7\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss:jandex:2.1.3.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml:classmate:1.5.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.dom4j:dom4j:2.1.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-classic:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:jul-to-slf4j:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:slf4j-api:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.yaml:snakeyaml:1.26\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish:jakarta.el:3.0.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.minidev:json-smart:2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.activation:jakarta.activation-api:1.2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.bytebuddy:byte-buddy-agent:1.10.14\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.objenesis:objenesis:2.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jcl:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:txw2:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.sun.istack:istack-commons-runtime:3.0.11\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.minidev:accessors-smart:1.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apiguardian:apiguardian-api:1.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.opentest4j:opentest4j:1.2.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.sun.activation:jakarta.activation:1.2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-core:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-api:2.13.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.ow2.asm:asm:5.0.4\" level=\"project\" />\r\n  </component>\r\n  <component name=\"TestModuleProperties\" production-module=\"cart.main\" />\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules/cart.test.iml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/modules/cart.test.iml	(date 1611736130304)
+@@ -11,7 +11,7 @@
+       </configuration>
+     </facet>
+   </component>
+-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
++  <component name="NewModuleRootManager">
+     <output-test url="file://$MODULE_DIR$/../../cart/build/classes/java/test" />
+     <exclude-output />
+     <content url="file://$MODULE_DIR$/../../cart/src/test">
+@@ -24,7 +24,6 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3" level="project" />
+@@ -39,34 +38,21 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-test-autoconfigure:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-test:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: com.jayway.jsonpath:json-path:2.4.0" level="project" />
+-    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.assertj:assertj-core:3.16.1" level="project" />
+     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest:2.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-params:5.6.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter:5.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.mockito:mockito-junit-jupiter:3.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.mockito:mockito-core:3.3.3" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.skyscreamer:jsonassert:1.5.0" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-test:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-aop:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-tx:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-core:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.xmlunit:xmlunit-core:2.7.0" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-aop:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.aspectj:aspectjweaver:1.9.6" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:3.4.5" level="project" />
++    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final" level="project" />
+     <orderEntry type="library" name="Gradle: org.jboss.logging:jboss-logging:3.4.1.Final" level="project" />
+     <orderEntry type="library" name="Gradle: org.javassist:javassist:3.24.0-GA" level="project" />
+@@ -75,37 +61,51 @@
+     <orderEntry type="library" name="Gradle: org.jboss:jandex:2.1.3.Final" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.5.1" level="project" />
+     <orderEntry type="library" name="Gradle: org.dom4j:dom4j:2.1.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-tx:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.30" level="project" />
+-    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
+-    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
++    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish:jakarta.el:3.0.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: net.minidev:json-smart:2.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.activation:jakarta.activation-api:1.2.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-params:5.6.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.10.14" level="project" />
+     <orderEntry type="library" name="Gradle: org.objenesis:objenesis:2.6" level="project" />
+     <orderEntry type="library" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.11" level="project" />
++    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2" level="project" />
+-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
+     <orderEntry type="library" name="Gradle: net.minidev:accessors-smart:1.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.apiguardian:apiguardian-api:1.1.0" level="project" />
++    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.2.0" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
+     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.13.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.ow2.asm:asm:5.0.4" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.6.2" level="project" />
+   </component>
+   <component name="TestModuleProperties" production-module="cart.main" />
+ </module>
+\ No newline at end of file
+Index: client/src/main/java/com/course/client/beans/CartItemBean.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.course.client.beans;\r\n\r\npublic class CartItemBean {\r\n\r\n    private Long id;\r\n\r\n    private Long productId;\r\n\r\n    private Integer quantity;\r\n\r\n    public CartItemBean() {\r\n    }\r\n\r\n    public CartItemBean(Long id, Long productId, Integer quantity) {\r\n        this.id = id;\r\n        this.productId = productId;\r\n        this.quantity = quantity;\r\n    }\r\n\r\n    public Long getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(Long id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public Long getProductId() {\r\n        return productId;\r\n    }\r\n\r\n    public void setProductId(Long productId) {\r\n        this.productId = productId;\r\n    }\r\n\r\n    public Integer getQuantity() {\r\n        return quantity;\r\n    }\r\n\r\n    public void setQuantity(Integer quantity) {\r\n        this.quantity = quantity;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Cart Item :\"+id+\":\"+productId+\":\"+quantity;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/main/java/com/course/client/beans/CartItemBean.java	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ client/src/main/java/com/course/client/beans/CartItemBean.java	(date 1611736525905)
+@@ -43,6 +43,6 @@
+ 
+     @Override
+     public String toString() {
+-        return "Cart Item :"+id+":"+productId+":"+quantity;
++        return "Cart Item :" + id + ":" + productId + ":" + quantity;
+     }
+ }
+Index: client/src/main/java/com/course/client/beans/ProductBean.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.course.client.beans;\r\n\r\npublic class ProductBean {\r\n    private Long id;\r\n\r\n    private String name;\r\n\r\n    private String description;\r\n\r\n    private String illustration;\r\n\r\n    private Double price;\r\n\r\n\r\n    public ProductBean(){}\r\n\r\n    public ProductBean(Long id, String name, String description, String illustration, Double price) {\r\n        this.id = id;\r\n        this.name = name;\r\n        this.description = description;\r\n        this.illustration = illustration;\r\n        this.price = price;\r\n    }\r\n\r\n    public Long getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(Long id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public void setName(String name) {\r\n        this.name = name;\r\n    }\r\n\r\n    public String getDescription() {\r\n        return description;\r\n    }\r\n\r\n    public void setDescription(String description) {\r\n        this.description = description;\r\n    }\r\n\r\n    public String getIllustration() {\r\n        return illustration;\r\n    }\r\n\r\n    public void setIllustration(String illustration) {\r\n        this.illustration = illustration;\r\n    }\r\n\r\n    public Double getPrice() {\r\n        return price;\r\n    }\r\n\r\n    public void setPrice(Double price) {\r\n        this.price = price;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return id+\":\"+name;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/main/java/com/course/client/beans/ProductBean.java	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ client/src/main/java/com/course/client/beans/ProductBean.java	(date 1611736525966)
+@@ -12,7 +12,8 @@
+     private Double price;
+ 
+ 
+-    public ProductBean(){}
++    public ProductBean() {
++    }
+ 
+     public ProductBean(Long id, String name, String description, String illustration, Double price) {
+         this.id = id;
+@@ -64,6 +65,6 @@
+ 
+     @Override
+     public String toString() {
+-        return id+":"+name;
++        return id + ":" + name;
+     }
+ }
+Index: .idea/modules/product.main.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module external.linked.project.id=\"product:main\" external.linked.project.path=\"$MODULE_DIR$/../../product\" external.root.project.path=\"$MODULE_DIR$/../../product\" external.system.id=\"GRADLE\" external.system.module.group=\"com.course\" external.system.module.type=\"sourceSet\" external.system.module.version=\"0.0.1-SNAPSHOT\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"FacetManager\">\r\n    <facet type=\"Spring\" name=\"Spring\">\r\n      <configuration />\r\n    </facet>\r\n    <facet type=\"web\" name=\"Web\">\r\n      <configuration>\r\n        <webroots />\r\n      </configuration>\r\n    </facet>\r\n  </component>\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\r\n    <output url=\"file://$MODULE_DIR$/../../product/build/classes/java/main\" />\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$/../../product/src/main\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/../../product/src/main/java\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/../../product/src/main/resources\" type=\"java-resource\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.h2database:h2:1.4.200\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate:hibernate-core:5.4.21.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aspects:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-json:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-webmvc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-web:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-context:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aop:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.aspectj:aspectjweaver:1.9.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.zaxxer:HikariCP:3.4.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-orm:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss.logging:jboss-logging:3.4.1.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.javassist:javassist:3.24.0-GA\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.bytebuddy:byte-buddy:1.10.14\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: antlr:antlr:2.7.7\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss:jandex:2.1.3.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml:classmate:1.5.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.dom4j:dom4j:2.1.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-tx:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-beans:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-expression:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-core:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-classic:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:jul-to-slf4j:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:slf4j-api:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.yaml:snakeyaml:1.26\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish:jakarta.el:3.0.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:txw2:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.sun.istack:istack-commons-runtime:3.0.11\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jcl:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-core:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.sun.activation:jakarta.activation:1.2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-api:2.13.3\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules/product.main.iml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/modules/product.main.iml	(date 1611736130314)
+@@ -10,7 +10,7 @@
+       </configuration>
+     </facet>
+   </component>
+-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
++  <component name="NewModuleRootManager">
+     <output url="file://$MODULE_DIR$/../../product/build/classes/java/main" />
+     <exclude-output />
+     <content url="file://$MODULE_DIR$/../../product/src/main">
+@@ -23,7 +23,6 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.hibernate:hibernate-core:5.4.21.Final" level="project" />
+@@ -34,13 +33,9 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-webmvc:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-web:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-aop:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.aspectj:aspectjweaver:1.9.6" level="project" />
+     <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:3.4.5" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final" level="project" />
+     <orderEntry type="library" name="Gradle: org.jboss.logging:jboss-logging:3.4.1.Final" level="project" />
+@@ -51,33 +46,38 @@
+     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.5.1" level="project" />
+     <orderEntry type="library" name="Gradle: org.dom4j:dom4j:2.1.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-tx:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-core:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
+     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.30" level="project" />
+-    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
+-    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
++    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish:jakarta.el:3.0.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.11" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
+     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.13.3" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
+     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.13.3" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: .idea/modules/product.test.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module external.linked.project.id=\"product:test\" external.linked.project.path=\"$MODULE_DIR$/../../product\" external.root.project.path=\"$MODULE_DIR$/../../product\" external.system.id=\"GRADLE\" external.system.module.group=\"com.course\" external.system.module.type=\"sourceSet\" external.system.module.version=\"0.0.1-SNAPSHOT\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"FacetManager\">\r\n    <facet type=\"Spring\" name=\"Spring\">\r\n      <configuration />\r\n    </facet>\r\n    <facet type=\"web\" name=\"Web\">\r\n      <configuration>\r\n        <webroots />\r\n        <sourceRoots />\r\n      </configuration>\r\n    </facet>\r\n  </component>\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\r\n    <output-test url=\"file://$MODULE_DIR$/../../product/build/classes/java/test\" />\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$/../../product/src/test\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/../../product/src/test/java\" isTestSource=\"true\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"module\" module-name=\"product.main\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.h2database:h2:1.4.200\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate:hibernate-core:5.4.21.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-jpa:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aspects:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-json:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-tomcat:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-webmvc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-web:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-test-autoconfigure:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-test:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.jayway.jsonpath:json-path:2.4.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.assertj:assertj-core:3.16.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hamcrest:hamcrest:2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.jupiter:junit-jupiter-params:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.platform:junit-platform-commons:1.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.junit.jupiter:junit-jupiter:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.mockito:mockito-junit-jupiter:3.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.mockito:mockito-core:3.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.skyscreamer:jsonassert:1.5.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: org.junit.platform:junit-platform-engine:1.6.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-test:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-context:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-aop:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-orm:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-tx:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-beans:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-expression:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-core:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.xmlunit:xmlunit-core:2.7.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.aspectj:aspectjweaver:1.9.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.zaxxer:HikariCP:3.4.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss.logging:jboss-logging:3.4.1.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.javassist:javassist:3.24.0-GA\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.bytebuddy:byte-buddy:1.10.14\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: antlr:antlr:2.7.7\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.jboss:jandex:2.1.3.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml:classmate:1.5.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.dom4j:dom4j:2.1.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-classic:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:jul-to-slf4j:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.slf4j:slf4j-api:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.yaml:snakeyaml:1.26\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish:jakarta.el:3.0.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.minidev:json-smart:2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: jakarta.activation:jakarta.activation-api:1.2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.bytebuddy:byte-buddy-agent:1.10.14\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.objenesis:objenesis:2.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.springframework:spring-jcl:5.2.9.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.glassfish.jaxb:txw2:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.sun.istack:istack-commons-runtime:3.0.11\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: net.minidev:accessors-smart:1.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apiguardian:apiguardian-api:1.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.opentest4j:opentest4j:1.2.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Gradle: com.sun.activation:jakarta.activation:1.2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: ch.qos.logback:logback-core:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.apache.logging.log4j:log4j-api:2.13.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Gradle: org.ow2.asm:asm:5.0.4\" level=\"project\" />\r\n  </component>\r\n  <component name=\"TestModuleProperties\" production-module=\"product.main\" />\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules/product.test.iml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/modules/product.test.iml	(date 1611736130324)
+@@ -11,7 +11,7 @@
+       </configuration>
+     </facet>
+   </component>
+-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
++  <component name="NewModuleRootManager">
+     <output-test url="file://$MODULE_DIR$/../../product/build/classes/java/test" />
+     <exclude-output />
+     <content url="file://$MODULE_DIR$/../../product/src/test">
+@@ -24,7 +24,6 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-jdbc:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.transaction:jakarta.transaction-api:1.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.persistence:jakarta.persistence-api:2.2.3" level="project" />
+@@ -39,34 +38,21 @@
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-test-autoconfigure:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-test:2.3.4.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: com.jayway.jsonpath:json-path:2.4.0" level="project" />
+-    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.assertj:assertj-core:3.16.1" level="project" />
+     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest:2.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-params:5.6.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2" level="project" />
+-    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter:5.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.mockito:mockito-junit-jupiter:3.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.mockito:mockito-core:3.3.3" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.skyscreamer:jsonassert:1.5.0" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-test:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-aop:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-tx:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.2.9.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-core:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.xmlunit:xmlunit-core:2.7.0" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-aop:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.aspectj:aspectjweaver:1.9.6" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-jdbc:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:3.4.5" level="project" />
++    <orderEntry type="library" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final" level="project" />
+     <orderEntry type="library" name="Gradle: org.jboss.logging:jboss-logging:3.4.1.Final" level="project" />
+     <orderEntry type="library" name="Gradle: org.javassist:javassist:3.24.0-GA" level="project" />
+@@ -75,37 +61,51 @@
+     <orderEntry type="library" name="Gradle: org.jboss:jandex:2.1.3.Final" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.5.1" level="project" />
+     <orderEntry type="library" name="Gradle: org.dom4j:dom4j:2.1.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
+-    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
+-    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-context:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-orm:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-commons:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-tx:5.2.9.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-beans:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.30" level="project" />
+-    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
+-    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.3.4.RELEASE" level="project" />
++    <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
++    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.26" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:9.0.38" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish:jakarta.el:3.0.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: net.minidev:json-smart:2.3" level="project" />
+     <orderEntry type="library" name="Gradle: jakarta.activation:jakarta.activation-api:1.2.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-params:5.6.2" level="project" />
++    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.10.14" level="project" />
+     <orderEntry type="library" name="Gradle: org.objenesis:objenesis:2.6" level="project" />
+     <orderEntry type="library" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
+     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.2.9.RELEASE" level="project" />
+     <orderEntry type="library" name="Gradle: org.glassfish.jaxb:txw2:2.3.3" level="project" />
+     <orderEntry type="library" name="Gradle: com.sun.istack:istack-commons-runtime:3.0.11" level="project" />
++    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2" level="project" />
+     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.11.2" level="project" />
+-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2" level="project" />
++    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.13.3" level="project" />
++    <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
+     <orderEntry type="library" name="Gradle: net.minidev:accessors-smart:1.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.apiguardian:apiguardian-api:1.1.0" level="project" />
++    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.6.2" level="project" />
+     <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.2.0" level="project" />
+-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
+     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.13.3" level="project" />
+     <orderEntry type="library" name="Gradle: org.ow2.asm:asm:5.0.4" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.200" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.6.2" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.6.2" level="project" />
+   </component>
+   <component name="TestModuleProperties" production-module="product.main" />
+ </module>
+\ No newline at end of file
+Index: client/src/main/resources/templates/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE HTML>\r\n<html xmlns:th=\"http://www.thymeleaf.org\">\r\n<head>\r\n    <title>Microservice Client</title>\r\n    <link th:rel=\"stylesheet\" th:href=\"@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} \"/>\r\n</head>\r\n<body>\r\n<div class=\"container\">\r\n    <h1>Microservice Client eCommerce</h1>\r\n    <div class=\"row\">\r\n        <div th:each=\"product : ${products}\" class=\"col-md-4 my-1\">\r\n            <a th:href=\"@{|/product-detail/${product.id}|}\" >\r\n                <img th:src=\"${product.illustration}\"  class=\"card-img-top\" />\r\n                <p th:text= \"${product.name}\"></p>\r\n            </a>\r\n        </div>\r\n    </div>\r\n</div>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/main/resources/templates/index.html	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ client/src/main/resources/templates/index.html	(date 1611736525987)
+@@ -9,9 +9,9 @@
+     <h1>Microservice Client eCommerce</h1>
+     <div class="row">
+         <div th:each="product : ${products}" class="col-md-4 my-1">
+-            <a th:href="@{|/product-detail/${product.id}|}" >
+-                <img th:src="${product.illustration}"  class="card-img-top" />
+-                <p th:text= "${product.name}"></p>
++            <a th:href="@{|/product-detail/${product.id}|}">
++                <img th:src="${product.illustration}" class="card-img-top"/>
++                <p th:text="${product.name}"></p>
+             </a>
+         </div>
+     </div>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/misc.xml	(date 1611736071383)
+@@ -1,5 +1,10 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="FrameworkDetectionExcludesConfiguration">
++    <file type="web" url="file://$PROJECT_DIR$/cart" />
++    <file type="web" url="file://$PROJECT_DIR$/client" />
++    <file type="web" url="file://$PROJECT_DIR$/product" />
++  </component>
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jarRepositories.xml	(date 1611736130346)
++++ .idea/jarRepositories.xml	(date 1611736130346)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="MavenRepo" />
++      <option name="name" value="MavenRepo" />
++      <option name="url" value="https://repo.maven.apache.org/maven2/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/cart.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/cart.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/cart.main.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/cart.main.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/cart.test.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/cart.test.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/client.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/client.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/client.main.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/client.main.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/client.test.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/client.test.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/product.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/product.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/product.main.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/product.main.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/modules/product.test.iml\" filepath=\"$PROJECT_DIR$/.idea/modules/product.test.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/modules.xml	(date 1611736526520)
+@@ -8,6 +8,7 @@
+       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client.iml" />
+       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client.main.iml" filepath="$PROJECT_DIR$/.idea/modules/client.main.iml" />
+       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client.test.iml" filepath="$PROJECT_DIR$/.idea/modules/client.test.iml" />
++      <module fileurl="file://$PROJECT_DIR$/orders.iml" filepath="$PROJECT_DIR$/orders.iml" />
+       <module fileurl="file://$PROJECT_DIR$/.idea/modules/product.iml" filepath="$PROJECT_DIR$/.idea/modules/product.iml" />
+       <module fileurl="file://$PROJECT_DIR$/.idea/modules/product.main.iml" filepath="$PROJECT_DIR$/.idea/modules/product.main.iml" />
+       <module fileurl="file://$PROJECT_DIR$/.idea/modules/product.test.iml" filepath="$PROJECT_DIR$/.idea/modules/product.test.iml" />
+Index: client/src/main/java/com/course/client/controllers/ClientController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.course.client.controllers;\r\n\r\nimport com.course.client.beans.ProductBean;\r\nimport com.course.client.proxies.MsProductProxy;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Controller;\r\nimport org.springframework.ui.Model;\r\nimport org.springframework.web.bind.annotation.RequestMapping;\r\n\r\nimport java.util.List;\r\n\r\n@Controller\r\npublic class ClientController {\r\n\r\n    @Autowired\r\n    private MsProductProxy msProductProxy;\r\n\r\n    @RequestMapping(\"/\")\r\n    public String index(Model model) {\r\n\r\n        List<ProductBean> products =  msProductProxy.list();\r\n\r\n        model.addAttribute(\"products\", products);\r\n\r\n        return \"index\";\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/main/java/com/course/client/controllers/ClientController.java	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ client/src/main/java/com/course/client/controllers/ClientController.java	(date 1611736525944)
+@@ -18,7 +18,7 @@
+     @RequestMapping("/")
+     public String index(Model model) {
+ 
+-        List<ProductBean> products =  msProductProxy.list();
++        List<ProductBean> products = msProductProxy.list();
+ 
+         model.addAttribute("products", products);
+ 
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$/cart\" />\r\n        <option name=\"gradleJvm\" value=\"1.8\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$/cart\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n      <GradleProjectSettings>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$/client\" />\r\n        <option name=\"gradleJvm\" value=\"1.8\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$/client\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"useAutoImport\" value=\"true\" />\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n      <GradleProjectSettings>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$/product\" />\r\n        <option name=\"gradleJvm\" value=\"1.8\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$/product\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/gradle.xml	(date 1611736004335)
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+@@ -11,7 +12,6 @@
+             <option value="$PROJECT_DIR$/cart" />
+           </set>
+         </option>
+-        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+       <GradleProjectSettings>
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+@@ -22,8 +22,6 @@
+             <option value="$PROJECT_DIR$/client" />
+           </set>
+         </option>
+-        <option name="useAutoImport" value="true" />
+-        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+       <GradleProjectSettings>
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+@@ -34,7 +32,6 @@
+             <option value="$PROJECT_DIR$/product" />
+           </set>
+         </option>
+-        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: .idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_11_2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2\">\r\n    <CLASSES>\r\n      <root url=\"jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.11.2/bc022ab0f0c83c07f9c52c5ab9a6a4932b15cc35/jackson-core-2.11.2.jar!/\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES>\r\n      <root url=\"jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.11.2/f08c2af3b8715d9ace84dc111170cb1e28e104ef/jackson-core-2.11.2-sources.jar!/\" />\r\n    </SOURCES>\r\n  </library>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_11_2.xml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_11_2.xml	(date 1611736130354)
+@@ -1,5 +1,8 @@
+ <component name="libraryTable">
+   <library name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.2">
++    <ANNOTATIONS>
++      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/externalAnnotations/com/fasterxml/jackson/core/jackson-core/2.9.6-an1/jackson-core-2.9.6-an1-annotations.zip!/" />
++    </ANNOTATIONS>
+     <CLASSES>
+       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.11.2/bc022ab0f0c83c07f9c52c5ab9a6a4932b15cc35/jackson-core-2.11.2.jar!/" />
+     </CLASSES>
+Index: client/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Setting deployment port\r\nserver.port = 8090\r\n\r\n#Setting application name\r\nspring.application.name = ms-client\r\n\r\n#Enabling H2 console\r\nspring.h2.console.enabled=true\r\n\r\n#Show SQL requests\r\nspring.jpa.show-sql=true\r\n\r\n# Custom H2 Console URL\r\nspring.h2.console.path=/h2-console\r\n\r\n#Setting database url\r\nspring.datasource.url=jdbc:h2:mem:devDb\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- client/src/main/resources/application.properties	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ client/src/main/resources/application.properties	(date 1611736525978)
+@@ -1,18 +1,13 @@
+ #Setting deployment port
+-server.port = 8090
+-
++server.port=8090
+ #Setting application name
+-spring.application.name = ms-client
+-
++spring.application.name=ms-client
+ #Enabling H2 console
+ spring.h2.console.enabled=true
+-
+ #Show SQL requests
+ spring.jpa.show-sql=true
+-
+ # Custom H2 Console URL
+ spring.h2.console.path=/h2-console
+-
+ #Setting database url
+ spring.datasource.url=jdbc:h2:mem:devDb
+ 
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <bytecodeTargetLevel>\r\n      <module name=\"cart.main\" target=\"1.8\" />\r\n      <module name=\"cart.test\" target=\"1.8\" />\r\n      <module name=\"client.main\" target=\"1.8\" />\r\n      <module name=\"client.test\" target=\"1.8\" />\r\n      <module name=\"product.main\" target=\"1.8\" />\r\n      <module name=\"product.test\" target=\"1.8\" />\r\n    </bytecodeTargetLevel>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision d83215bbc9f3a6db3517fcc3f54525ebbad3295e)
++++ .idea/compiler.xml	(date 1611736071399)
+@@ -2,10 +2,13 @@
+ <project version="4">
+   <component name="CompilerConfiguration">
+     <bytecodeTargetLevel>
++      <module name="cart" target="1.8" />
+       <module name="cart.main" target="1.8" />
+       <module name="cart.test" target="1.8" />
++      <module name="client" target="1.8" />
+       <module name="client.main" target="1.8" />
+       <module name="client.test" target="1.8" />
++      <module name="product" target="1.8" />
+       <module name="product.main" target="1.8" />
+       <module name="product.test" target="1.8" />
+     </bytecodeTargetLevel>

@@ -24,8 +24,7 @@ public class CartController {
     CartItemRepository cartItemRepository;
 
     @PostMapping(value = "/cart")
-    public ResponseEntity<Cart> createNewCart(@RequestBody Cart cartData)
-    {
+    public ResponseEntity<Cart> createNewCart(@RequestBody Cart cartData) {
         Cart cart = cartRepository.save(new Cart());
 
         if (cart == null)
@@ -35,8 +34,7 @@ public class CartController {
     }
 
     @GetMapping(value = "/cart/{id}")
-    public Optional<Cart> getCart(@PathVariable Long id)
-    {
+    public Optional<Cart> getCart(@PathVariable Long id) {
         Optional<Cart> cart = cartRepository.findById(id);
 
         if (cart == null)
@@ -47,8 +45,7 @@ public class CartController {
 
     @PostMapping(value = "/cart/{id}")
     @Transactional
-    public ResponseEntity<CartItem> addProductToCart(@PathVariable Long id, @RequestBody CartItem cartItem)
-    {
+    public ResponseEntity<CartItem> addProductToCart(@PathVariable Long id, @RequestBody CartItem cartItem) {
         Cart cart = cartRepository.getOne(id);
 
         if (cart == null)
