@@ -12,8 +12,7 @@ public class ProductBean {
     private Double price;
 
 
-    public ProductBean() {
-    }
+    public ProductBean(){}
 
     public ProductBean(Long id, String name, String description, String illustration, Double price) {
         this.id = id;
@@ -65,6 +64,6 @@ public class ProductBean {
 
     @Override
     public String toString() {
-        return id + ":" + name;
+        return id+":"+name;
     }
 }

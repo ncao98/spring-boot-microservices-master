@@ -18,7 +18,7 @@ public class ClientController {
     @RequestMapping("/")
     public String index(Model model) {
 
-        List<ProductBean> products = msProductProxy.list();
+        List<ProductBean> products =  msProductProxy.list();
 
         model.addAttribute("products", products);
 
