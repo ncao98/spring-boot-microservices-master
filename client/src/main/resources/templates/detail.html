@@ -6,7 +6,10 @@
 </head>
 <body>
 <div class="container">
-    <h1>Microservice Client eCommerce</h1>
+    <h1 th:text="${productInstance.getName()}"></h1>
+    <img th:src="${productInstance.getIllustration()}"  class="card-img-top" />
+    <p th:text="${productInstance.getDescription()}"></p>
+    <p th:text="${productInstance.getPrice()}"></p>
 </div>
 </body>
 </html>

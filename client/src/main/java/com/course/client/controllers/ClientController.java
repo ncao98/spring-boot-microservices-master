@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -30,11 +31,13 @@ public class ClientController {
     }
 
     @RequestMapping("/product-detail/{id}")
-    public String get(@PathVariable Long id) {
+    public String get(@PathVariable Long id, Model model) {
         Optional<ProductBean> productInstance = msProductProxy.get(id);
 
         if (!productInstance.isPresent())
-            throw new ResponseStatusException(HttpStatus.CREATED, "Specified product doesn't exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified product doesn't exist");
+
+        model.addAttribute("productInstance", productInstance.get());
 
         return "detail";
     }
