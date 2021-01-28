@@ -8,7 +8,7 @@ public class Order {
     @Id
     @GeneratedValue
     private Long id;
-    private Long paidTotal;
+    private Double paidTotal;
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> orders;
 
@@ -23,11 +23,11 @@ public class Order {
         this.id = id;
     }
 
-    public Long getPaidTotal() {
+    public Double getPaidTotal() {
         return paidTotal;
     }
 
-    public void setPaidTotal(Long paidTotal) {
+    public void setPaidTotal(Double paidTotal) {
         this.paidTotal = paidTotal;
     }
 
@@ -39,15 +39,29 @@ public class Order {
         this.orders = orders;
     }
 
-    public Order(Long id, Long paidTotal, List<OrderItem> orders) {
+    public Order(Long id, Double paidTotal, List<OrderItem> orders) {
         this.id = id;
         this.paidTotal = paidTotal;
         this.orders = orders;
     }
 
-
+    //ajoute l'item à l'order, et actualise le paidTotal
     public void addOrderItem (OrderItem orderItem){
+
         this.orders.add(orderItem);
+        this.paidTotal += orderItem.getPrice()* orderItem.getQuantity();
     }
-    
+
+
+    //Avons nous vrmt besoin de cette fonction du coup?
+    /* public void calculPaidTotal(){
+        paidTotal= 0.0;
+        for (OrderItem orderItem : orders){
+            paidTotal += orderItem.getPrice()* orderItem.getQuantity();
+
+
+        }
+    }
+
+     */
 }
