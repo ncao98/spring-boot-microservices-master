@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Microservice Client</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="List_articles">
+<h1>Liste des articles : </h1>
+<div class="container mainProduct">
+    <div class="item-a">
+        <img th:src="${productInstance.getIllustration()}"/>
+    </div>
+
+    <div class="information">
+        <div class="item-b">
+            <h1 th:text="${productInstance.getName()}"></h1>
+        </div>
+        <div class="item-d">
+            <p th:text="${productInstance.getDescription()}"></p>
+        </div>
+        <div class="price-btn">
+            <div class="item-c">
+                <p th:text="${productInstance.getPrice()}+' €'"></p>
+            </div>
+			 
+			
+		</div>
+		<div class="end_list">
+			<div class="item-j">
+                <h3>Prix total : </h3> <p th:text="${order.getPaidtotal()}+' €'"></p>
+            </div>
+			<div class="2_btns">
+				<div class="item-h">
+					<button>Continuer ses achats</button>
+				</div>
+				<div class="item-i">
+					<button>Valider le panier</button>
+				</div>
+			</div>
+		</div>
+        
+    </div>
+</div>
+
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
