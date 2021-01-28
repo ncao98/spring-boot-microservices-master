@@ -27,7 +27,7 @@
 
         <div class="price-btn">
             <div class="item-c">
-                <p th:text="${productInstance.getPrice()}"></p>
+                <p th:text="${productInstance.getPrice()}+' €'"></p>
             </div>
 
             <div class="item-e">
@@ -36,5 +36,6 @@
         </div>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
