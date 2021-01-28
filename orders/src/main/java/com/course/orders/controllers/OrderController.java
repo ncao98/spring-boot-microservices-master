@@ -1,6 +1,8 @@
 package com.course.orders.controllers;
 
 import com.course.orders.domain.Order;
+import com.course.orders.domain.OrderItem;
+import com.course.orders.repositories.OrderItemRepository;
 import com.course.orders.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,7 +60,7 @@ public class OrderController {
 
         orderRepository.save(order);
 
-        return new ResponseEntity<OrderItem>(orderItem, HttpStatus.CREATED);
+        return new ResponseEntity<>(orderItem, HttpStatus.CREATED);
     }
 }
 

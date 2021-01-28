@@ -1,15 +1,10 @@
-package com.course.orders.domain;
+package com.course.client.beans;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-public class Order {
-    @Id
-    @GeneratedValue
+public class OrderBean {
     private Long id;
     private Long paidTotal;
-    @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> orders;
 
     public Order() {
@@ -49,5 +44,5 @@ public class Order {
     public void addOrderItem (OrderItem orderItem){
         this.orders.add(orderItem);
     }
-    
+
 }
