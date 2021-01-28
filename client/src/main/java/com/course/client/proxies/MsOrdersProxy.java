@@ -2,6 +2,7 @@ package com.course.client.proxies;
 
 import com.course.client.beans.CartBean;
 import com.course.client.beans.CartItemBean;
+import com.course.client.beans.OrderBean;
 import com.course.client.beans.OrderItemBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
