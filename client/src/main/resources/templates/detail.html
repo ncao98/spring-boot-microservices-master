@@ -3,13 +3,38 @@
 <head>
     <title>Microservice Client</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+
 </head>
 <body>
-<div class="container">
-    <h1 th:text="${productInstance.getName()}"></h1>
-    <img th:src="${productInstance.getIllustration()}"  class="card-img-top" />
-    <p th:text="${productInstance.getDescription()}"></p>
-    <p th:text="${productInstance.getPrice()}"></p>
+<div th:replace="fragments/header :: header"></div>
+<div class="container mainProduct">
+    <div class="item-a">
+        <img th:src="${productInstance.getIllustration()}"/>
+    </div>
+
+    <div class="information">
+        <div class="item-b">
+            <h1 th:text="${productInstance.getName()}"></h1>
+        </div>
+        <div class="item-f">
+            <p>En stock</p>
+        </div>
+        <div class="item-d">
+            <p th:text="${productInstance.getDescription()}"></p>
+        </div>
+
+        <div class="price-btn">
+            <div class="item-c">
+                <p th:text="${productInstance.getPrice()}"></p>
+            </div>
+
+            <div class="item-e">
+                <button>Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
