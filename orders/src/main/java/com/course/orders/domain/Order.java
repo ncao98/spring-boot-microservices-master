@@ -1,8 +1,7 @@
 package com.course.orders.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Order {
@@ -10,13 +9,19 @@ public class Order {
     @GeneratedValue
     private Long id;
     private Long paidTotal;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderItem> orders;
 
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", paidTotal=" + paidTotal +
+                ", orders=" + orders +
                 '}';
+    }
+
+    public Order() {
     }
 
     public Long getId() {
@@ -35,11 +40,23 @@ public class Order {
         this.paidTotal = paidTotal;
     }
 
-    public Order(Long id, Long paidTotal) {
-        this.id = id;
-        this.paidTotal = paidTotal;
+    public List<OrderItem> getOrders() {
+        return orders;
     }
 
-    public Order(){}
+    public void setOrders(List<OrderItem> orders) {
+        this.orders = orders;
+    }
+
+    public Order(Long id, Long paidTotal, List<OrderItem> orders) {
+        this.id = id;
+        this.paidTotal = paidTotal;
+        this.orders = orders;
+    }
+
+
+    public void addOrderItem (OrderItem orderItem){
+        this.orders.add(orderItem);
+    }
     
 }
