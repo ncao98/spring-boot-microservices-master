@@ -5,9 +5,9 @@ import java.util.List;
 public class OrderBean {
     private Long id;
     private Long paidTotal;
-    private List<OrderItem> orders;
+    private List<OrderItemBean> orders;
 
-    public Order() {
+    public OrderBean() {
     }
 
     public Long getId() {
@@ -26,22 +26,22 @@ public class OrderBean {
         this.paidTotal = paidTotal;
     }
 
-    public List<OrderItem> getOrders() {
+    public List<OrderItemBean> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<OrderItem> orders) {
+    public void setOrders(List<OrderItemBean> orders) {
         this.orders = orders;
     }
 
-    public Order(Long id, Long paidTotal, List<OrderItem> orders) {
+    public OrderBean(Long id, Long paidTotal, List<OrderItemBean> orders) {
         this.id = id;
         this.paidTotal = paidTotal;
         this.orders = orders;
     }
 
 
-    public void addOrderItem (OrderItem orderItem){
+    public void addOrderItem (OrderItemBean orderItem){
         this.orders.add(orderItem);
     }
 
