@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Order {
+public class Orderz {
     @Id
     @GeneratedValue
     private Long id;
@@ -12,7 +12,7 @@ public class Order {
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> orders;
 
-    public Order() {
+    public Orderz() {
     }
 
     public Long getId() {
@@ -39,7 +39,7 @@ public class Order {
         this.orders = orders;
     }
 
-    public Order(Long id, Double paidTotal, List<OrderItem> orders) {
+    public Orderz(Long id, Double paidTotal, List<OrderItem> orders) {
         this.id = id;
         this.paidTotal = paidTotal;
         this.orders = orders;

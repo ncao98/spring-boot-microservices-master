@@ -70,18 +70,23 @@ public class ClientController {
 
 
         List<ProductBean> products = null;
+        Double total=0.0;
 
         for (int i=0; i<cartItemsBean.size(); i++){
 
 
             Optional<ProductBean> productBean = msProductProxy.get(cartItemsBean.get(i).getProductId());
             products.add(productBean.get());
+            total+=cartItemsBean.get(i).getQuantity()* productBean.get().getPrice();
+
 
         }
 
         if (!cartInstance.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
 
+
+        model.addAttribute("total", total);
 
         model.addAttribute("infoProducts", products);
 

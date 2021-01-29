@@ -12,27 +12,29 @@
 <div class="List_articles">
 <h1>Liste des articles : </h1>
 <div class="container mainProduct">
+    <div th:each="product : ${infoProducts}" class="col-md-1 my-1">
     <div class="item-a">
-        <img th:src="${productInstance.getIllustration()}"/>
+        <img th:src="${product.illustration}"/>
     </div>
 
     <div class="information">
         <div class="item-b">
-            <h1 th:text="${productInstance.getName()}"></h1>
+            <h1 th:text="${product.name}"></h1>
         </div>
         <div class="item-d">
-            <p th:text="${productInstance.getDescription()}"></p>
+            <p th:text="${product.description}"></p>
         </div>
         <div class="price-btn">
             <div class="item-c">
-                <p th:text="${productInstance.getPrice()}+' €'"></p>
+                <p th:text="${product.price}+' €'"></p>
             </div>
 			 
 			
 		</div>
+
 		<div class="end_list">
 			<div class="item-j">
-                <h3>Prix total : </h3> <p th:text="${order.getPaidtotal()}+' €'"></p>
+                <h3>Prix total : </h3> <p th:text="${total}+' €'"></p>
             </div>
 			<div class="2_btns">
 				<div class="item-h">
@@ -44,6 +46,7 @@
 			</div>
 		</div>
         
+    </div>
     </div>
 </div>
 

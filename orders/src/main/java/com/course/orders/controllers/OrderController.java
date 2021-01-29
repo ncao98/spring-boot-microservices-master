@@ -1,6 +1,6 @@
 package com.course.orders.controllers;
 
-import com.course.orders.domain.Order;
+import com.course.orders.domain.Orderz;
 import com.course.orders.domain.OrderItem;
 import com.course.orders.repositories.OrderItemRepository;
 import com.course.orders.repositories.OrderRepository;
@@ -23,42 +23,42 @@ public class OrderController {
     OrderItemRepository orderItemRepository;
 
     @PostMapping(value = "/order")
-    public ResponseEntity<Order> createNewOrder(@RequestBody Order orderData)
+    public ResponseEntity<Orderz> createNewOrder(@RequestBody Orderz orderData)
     {
-        Order order = orderRepository.save(new Order());
+        Orderz orderz = orderRepository.save(new Orderz());
 
-        if (order == null)
+        if (orderz == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Couldn't create a new order");
 
-        return new ResponseEntity<Order>(order, HttpStatus.CREATED);
+        return new ResponseEntity<Orderz>(orderz, HttpStatus.CREATED);
     }
 
 
 
     @GetMapping(value = "/order/{id}")
-    public Optional<Order> getOrder(@PathVariable Long id)
+    public Optional<Orderz> getOrder(@PathVariable Long id)
     {
-        Optional<Order> order = orderRepository.findById(id);
+        Optional<Orderz> orderz = orderRepository.findById(id);
 
-        if (order == null)
+        if (orderz == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't get order");
 
-        return order;
+        return orderz;
     }
 
     @PostMapping(value = "/order/{id}")
     @Transactional
     public ResponseEntity<OrderItem> addOrderItemToOrder(@PathVariable Long id, @RequestBody OrderItem orderItem)
     {
-        Order order = orderRepository.getOne(id);
+        Orderz orderz = orderRepository.getOne(id);
 
-        if (order == null)
+        if (orderz == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't get order");
 
 
-        order.addOrderItem(orderItem);
+        orderz.addOrderItem(orderItem);
 
-        orderRepository.save(order);
+        orderRepository.save(orderz);
 
         return new ResponseEntity<>(orderItem, HttpStatus.CREATED);
     }
