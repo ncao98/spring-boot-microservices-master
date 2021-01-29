@@ -2,8 +2,10 @@ package com.course.client.controllers;
 
 import com.course.client.beans.CartBean;
 import com.course.client.beans.CartItemBean;
+import com.course.client.beans.OrderBean;
 import com.course.client.beans.ProductBean;
 import com.course.client.proxies.MsCartProxy;
+import com.course.client.proxies.MsOrdersProxy;
 import com.course.client.proxies.MsProductProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,9 @@ public class ClientController {
 
     @Autowired
     private MsCartProxy msCartProxy;
+
+    @Autowired
+    private MsOrdersProxy msOrdersProxy;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -149,6 +154,9 @@ public class ClientController {
 
         return "index";
     }
+
+
+
 
 
 }
