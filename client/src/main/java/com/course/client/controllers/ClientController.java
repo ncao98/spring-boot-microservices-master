@@ -7,6 +7,7 @@ import com.course.client.proxies.MsCartProxy;
 import com.course.client.proxies.MsProductProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,11 @@ public class ClientController {
 
         model.addAttribute("products", products);
 
+        ResponseEntity<CartBean> cartBean = msCartProxy.createNewCart(new CartBean());
+
+        Long cartId = cartBean.getBody().getId();
+        System.out.println("id du nouveau cart est: "+ cartId);
+
         return "index";
     }
 
@@ -53,7 +59,7 @@ public class ClientController {
     public String addProduct (Model model,@PathVariable Long productId){
 
         // id cart
-        Long idCart = 1L;
+        Long idCart = 7L;
 
         //Get cart
         Optional<CartBean> cart = msCartProxy.getCart(idCart);
@@ -73,6 +79,27 @@ public class ClientController {
         //Go back to index
         List<ProductBean> products = msProductProxy.list();
         model.addAttribute("products", products);
+
+        return "index";
+    }
+
+    @RequestMapping("/empty-cart/{cartId}")
+    public String emptyCart(Model model, @PathVariable Long cartId){
+
+        //Récupérer le cart associé à l'id
+        Optional<CartBean> cartBean = msCartProxy.getCart(cartId);
+        //Récupérer la liste de cartItem associée et la vider
+        List<CartItemBean> cartItemBeans = cartBean.get().getProducts();
+
+        cartItemBeans = null ;
+
+        return "index";
+    }
+
+    @RequestMapping("/delete-cart/{cartId}")
+    public String deleteCart(Model model, @PathVariable Long cartId){
+        //Récupérer le cart associé à l'id
+        Optional<CartBean> cartBean = msCartProxy.getCart(cartId);
 
         return "index";
     }
