@@ -13,19 +13,19 @@
     <div class="row">
         <div th:each="product : ${products}" class="col-md-4 my-1">
             <div class="card">
-                <a th:href="@{|/product-detail/${product.id}|}">
+                <a th:href="@{|/${cart.id}/product-detail/${product.id}|}">
                     <img th:src="${product.illustration}" class="card-img-top" style="width:100%"/>
                 </a>
                 <div class="flex-row">
                     <div class="name-price">
                         <div class="index-name">
-                            <a th:href="@{|/product-detail/${product.id}|}">
+                            <a th:href="@{|/${cart.id}/product-detail/${product.id}|}">
                                 <p th:text="${product.name}"></p>
                             </a>
                         </div>
                         <div class="index-button">
                             <button type="button" class="btn btn-primary btn-sm">
-                                <a th:href="@{|/add-product/${product.id}|}">
+                                <a th:href="@{|/${cart.id}/add-product/${product.id}|}">
                                     Add to cart
                                 </a>
                             </button>
@@ -38,9 +38,6 @@
                 </div>
             </div>
 
-        </div>
-        <div>
-            <p th:text="${cartSize}"></p>
         </div>
     </div>
 </div>
