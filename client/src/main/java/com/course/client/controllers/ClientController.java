@@ -11,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -40,8 +38,25 @@ public class ClientController {
 
     }*/
 
-    @RequestMapping("/")
+
+    public String createCart(Model model) {
+
+        // Création d'un Panier de Session
+        ResponseEntity<CartBean> cartBeanInstance = msCartProxy.createNewCart(new CartBean());
+        model.addAttribute("cart", cartBeanInstance.getBody());
+
+        return "redirect:/index/" + cartBeanInstance.getBody().getId();
+    }
+
+    @RequestMapping("/index/{cartId}")
     public String index(Model model, @PathVariable Long cartId) {
+
+        Optional<CartBean> sessionCartBean = msCartProxy.getCart(cartId);
+
+        if(!sessionCartBean.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not find cart.");
+
+        model.addAttribute("cart", sessionCartBean.get());
 
         List<ProductBean> products =  msProductProxy.list();
 
@@ -50,8 +65,15 @@ public class ClientController {
         return "index";
     }
 
-    @RequestMapping("/product-detail/{id}")
-    public String get(@PathVariable Long id, Model model, @PathVariable Long cartId) {
+
+    @RequestMapping("/{cartId}/product-detail/{id}")
+    public String get(Model model, @PathVariable Long id, @PathVariable Long cartId) {
+        //Récupérer le cart de session
+        Optional<CartBean> sessionCartBean = msCartProxy.getCart(cartId);
+        if(!sessionCartBean.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not find cart.");
+        model.addAttribute("cart", sessionCartBean.get());
+
         Optional<ProductBean> productInstance = msProductProxy.get(id);
 
         if (!productInstance.isPresent())
@@ -62,18 +84,16 @@ public class ClientController {
         return "detail";
     }
 
-    @RequestMapping("/add-product/{productId}")
-    public String addProduct (Model model,@PathVariable Long productId){
+    @RequestMapping("/{cartId}/add-product/{productId}")
+    public String addProduct (Model model,@PathVariable Long productId, @PathVariable Long cartId){
 
         // id cart
-        Long idCart = 7L;
+        //Long idCart = 7L;
 
         //Get cart
-        Optional<CartBean> cart = msCartProxy.getCart(idCart);
-
-        //test cart
-        if (!cart.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find cart.");
+        Optional<CartBean> sessionCartBean = msCartProxy.getCart(cartId);
+        if(!sessionCartBean.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not find cart.");
 
         //Create cartItem
         CartItemBean cartItemBean = new CartItemBean();
@@ -81,11 +101,12 @@ public class ClientController {
         cartItemBean.setQuantity(1);
 
         //Add CartItem to Cart
-        msCartProxy.addProductToCart(idCart, cartItemBean);
+        msCartProxy.addProductToCart(cartId, cartItemBean);
 
         //Go back to index
         List<ProductBean> products = msProductProxy.list();
         model.addAttribute("products", products);
+        model.addAttribute("cart", sessionCartBean.get());
 
         return "index";
     }
