@@ -44,7 +44,7 @@ public class ClientController {
     @RequestMapping("/")
     public String index(Model model, @PathVariable Long cartId) {
 
-        List<ProductBean> products =  msProductProxy.list();
+        List<ProductBean> products = msProductProxy.list();
 
         model.addAttribute("products", products);
 
@@ -64,9 +64,8 @@ public class ClientController {
     }
 
 
-
     @RequestMapping("/cart")
-    public String getCart(@PathVariable Long id, Model model){
+    public String getCart(@PathVariable Long id, Model model) {
         Optional<CartBean> cartInstance = msCartProxy.getCart(1L);
         // Boucler sur les cart items et pour chaque cart item
         // Récupérer les informations du produit (avec le msProductProxy) pour chaque cart item (productId)
@@ -83,14 +82,14 @@ public class ClientController {
 
 
         List<ProductBean> products = null;
-        Double total=0.0;
+        Double total = 0.0;
 
-        for (int i=0; i<cartItemsBean.size(); i++){
+        for (int i = 0; i < cartItemsBean.size(); i++) {
 
 
             Optional<ProductBean> productBean = msProductProxy.get(cartItemsBean.get(i).getProductId());
             products.add(productBean.get());
-            total+=cartItemsBean.get(i).getQuantity()* productBean.get().getPrice();
+            total += cartItemsBean.get(i).getQuantity() * productBean.get().getPrice();
 
 
         }
@@ -111,7 +110,7 @@ public class ClientController {
 
 
     @RequestMapping("/add-product/{productId}")
-    public String addProduct (Model model,@PathVariable Long productId){
+    public String addProduct(Model model, @PathVariable Long productId) {
 
         // id cart
         Long idCart = 7L;
@@ -139,68 +138,23 @@ public class ClientController {
     }
 
     @RequestMapping("/empty-cart/{cartId}")
-    public String emptyCart(Model model, @PathVariable Long cartId){
+    public String emptyCart(Model model, @PathVariable Long cartId) {
 
         //Récupérer le cart associé à l'id
         Optional<CartBean> cartBean = msCartProxy.getCart(cartId);
         //Récupérer la liste de cartItem associée et la vider
         List<CartItemBean> cartItemBeans = cartBean.get().getProducts();
 
-        cartItemBeans = null ;
+        cartItemBeans = null;
 
         return "index";
     }
 
     @RequestMapping("/delete-cart/{cartId}")
-    public String deleteCart(Model model, @PathVariable Long cartId){
+    public String deleteCart(Model model, @PathVariable Long cartId) {
         //Récupérer le cart associé à l'id
         Optional<CartBean> cartBean = msCartProxy.getCart(cartId);
 
         return "index";
     }
-
-    @RequestMapping("/cart/{id}")
-    public String getCart(@PathVariable Long id, Model model){
-        Optional<CartBean> cartInstance = msCartProxy.getCart(1L);
-        // Boucler sur les cart items et pour chaque cart item
-        // Récupérer les informations du produit (avec le msProductProxy) pour chaque cart item (productId)
-        // Pour chaque produit récupéré, on ajoute au modèle (model) les informations du produit récupéré pour pouvoir les afficher dans la page
-        // Pour ajouter les produits au modèle :
-        // 1. On construit une liste (List<ProductBean> products)
-        // 2. Pour chaque produit on l'ajoute à la liste
-        // 3. A la fin, on ajoute notre liste "products" au "model"
-
-
-        //nb d'élément
-
-        List<CartItemBean> cartItemsBean = cartInstance.get().getProducts();
-
-
-        List<ProductBean> products = null;
-        Double total=0.0;
-
-        for (int i=0; i<cartItemsBean.size(); i++){
-
-
-            Optional<ProductBean> productBean = msProductProxy.get(cartItemsBean.get(i).getProductId());
-            products.add(productBean.get());
-            total+=cartItemsBean.get(i).getQuantity()* productBean.get().getPrice();
-
-
-        }
-
-        if (!cartInstance.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
-
-
-        model.addAttribute("total", total);
-
-        model.addAttribute("infoProducts", products);
-
-        model.addAttribute("cartInstance", cartInstance.get());
-
-        return "panier";
-
-    }
-
 }
