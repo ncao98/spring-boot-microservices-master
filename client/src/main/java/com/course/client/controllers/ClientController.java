@@ -26,6 +26,18 @@ public class ClientController {
     @Autowired
     private MsCartProxy msCartProxy;
 
+    //Créer un cart au démarrage de la page
+    /*@RequestMapping("/")
+    public String createCart(Model model){
+
+        //créer un cart
+        ResponseEntity<CartBean> cartBeanInstance = msCartProxy.createNewCart(new CartBean());
+
+        return "index";
+
+
+    }*/
+
     @RequestMapping("/")
     public String createCart(Model model) {
 
@@ -49,8 +61,6 @@ public class ClientController {
         List<ProductBean> products =  msProductProxy.list();
 
         model.addAttribute("products", products);
-
-
 
         return "index";
     }
@@ -76,9 +86,6 @@ public class ClientController {
 
     @RequestMapping("/{cartId}/add-product/{productId}")
     public String addProduct (Model model,@PathVariable Long productId, @PathVariable Long cartId){
-
-        // id cart
-        //Long idCart = 7L;
 
         //Get cart
         Optional<CartBean> sessionCartBean = msCartProxy.getCart(cartId);
@@ -120,6 +127,50 @@ public class ClientController {
         Optional<CartBean> cartBean = msCartProxy.getCart(cartId);
 
         return "index";
+    }
+
+    @RequestMapping("/cart/{id}")
+    public String getCart(@PathVariable Long id, Model model){
+        Optional<CartBean> cartInstance = msCartProxy.getCart(1L);
+        // Boucler sur les cart items et pour chaque cart item
+        // Récupérer les informations du produit (avec le msProductProxy) pour chaque cart item (productId)
+        // Pour chaque produit récupéré, on ajoute au modèle (model) les informations du produit récupéré pour pouvoir les afficher dans la page
+        // Pour ajouter les produits au modèle :
+        // 1. On construit une liste (List<ProductBean> products)
+        // 2. Pour chaque produit on l'ajoute à la liste
+        // 3. A la fin, on ajoute notre liste "products" au "model"
+
+
+        //nb d'élément
+
+        List<CartItemBean> cartItemsBean = cartInstance.get().getProducts();
+
+
+        List<ProductBean> products = null;
+        Double total=0.0;
+
+        for (int i=0; i<cartItemsBean.size(); i++){
+
+
+            Optional<ProductBean> productBean = msProductProxy.get(cartItemsBean.get(i).getProductId());
+            products.add(productBean.get());
+            total+=cartItemsBean.get(i).getQuantity()* productBean.get().getPrice();
+
+
+        }
+
+        if (!cartInstance.isPresent())
+            //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
+            return "panier_vide";
+
+        model.addAttribute("total", total);
+
+        model.addAttribute("infoProducts", products);
+
+        model.addAttribute("cartInstance", cartInstance.get());
+
+        return "panier";
+
     }
 
 }
