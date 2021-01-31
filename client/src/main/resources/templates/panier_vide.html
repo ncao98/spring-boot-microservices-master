@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Microservice Client</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="List_articles">
+    <h1>Votre panier est vide ! </h1>
+</div>
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
