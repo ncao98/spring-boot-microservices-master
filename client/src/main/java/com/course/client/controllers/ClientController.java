@@ -41,7 +41,7 @@ public class ClientController {
     }*/
 
     @RequestMapping("/")
-    public String index(Model model, @PathVariable Long cartId) {
+    public String index(Model model) {
 
         List<ProductBean> products =  msProductProxy.list();
 
@@ -51,7 +51,7 @@ public class ClientController {
     }
 
     @RequestMapping("/product-detail/{id}")
-    public String get(@PathVariable Long id, Model model, @PathVariable Long cartId) {
+    public String get(@PathVariable Long id, Model model) {
         Optional<ProductBean> productInstance = msProductProxy.get(id);
 
         if (!productInstance.isPresent())
@@ -66,7 +66,7 @@ public class ClientController {
     public String addProduct (Model model,@PathVariable Long productId){
 
         // id cart
-        Long idCart = 7L;
+        Long idCart = 1L;
 
         //Get cart
         Optional<CartBean> cart = msCartProxy.getCart(idCart);
@@ -142,8 +142,8 @@ public class ClientController {
         }
 
         if (!cartInstance.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
-
+            //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
+            return "panier_vide";
 
         model.addAttribute("total", total);
 
