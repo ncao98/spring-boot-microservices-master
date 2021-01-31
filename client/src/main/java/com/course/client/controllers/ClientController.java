@@ -159,48 +159,4 @@ public class ClientController {
         return "index";
     }
 
-    @RequestMapping("/cart/{id}")
-    public String getCart(@PathVariable Long id, Model model){
-        Optional<CartBean> cartInstance = msCartProxy.getCart(1L);
-        // Boucler sur les cart items et pour chaque cart item
-        // Récupérer les informations du produit (avec le msProductProxy) pour chaque cart item (productId)
-        // Pour chaque produit récupéré, on ajoute au modèle (model) les informations du produit récupéré pour pouvoir les afficher dans la page
-        // Pour ajouter les produits au modèle :
-        // 1. On construit une liste (List<ProductBean> products)
-        // 2. Pour chaque produit on l'ajoute à la liste
-        // 3. A la fin, on ajoute notre liste "products" au "model"
-
-
-        //nb d'élément
-
-        List<CartItemBean> cartItemsBean = cartInstance.get().getProducts();
-
-
-        List<ProductBean> products = null;
-        Double total=0.0;
-
-        for (int i=0; i<cartItemsBean.size(); i++){
-
-
-            Optional<ProductBean> productBean = msProductProxy.get(cartItemsBean.get(i).getProductId());
-            products.add(productBean.get());
-            total+=cartItemsBean.get(i).getQuantity()* productBean.get().getPrice();
-
-
-        }
-
-        if (!cartInstance.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
-
-
-        model.addAttribute("total", total);
-
-        model.addAttribute("infoProducts", products);
-
-        model.addAttribute("cartInstance", cartInstance.get());
-
-        return "panier";
-
-    }
-
 }
