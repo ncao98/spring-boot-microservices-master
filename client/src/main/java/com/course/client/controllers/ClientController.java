@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,7 +122,9 @@ public class ClientController {
 
     @RequestMapping("cart/{cartId}/detailCart")
     public String getCart(@PathVariable Long cartId, Model model){
-        Optional<CartBean> cartInstance = msCartProxy.getCart(cartId);
+        Optional<CartBean> sessionCartBean = msCartProxy.getCart(cartId);
+        if(!sessionCartBean.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not find cart.");
         // Boucler sur les cart items et pour chaque cart item
         // Récupérer les informations du produit (avec le msProductProxy) pour chaque cart item (productId)
         // Pour chaque produit récupéré, on ajoute au modèle (model) les informations du produit récupéré pour pouvoir les afficher dans la page
@@ -133,23 +136,27 @@ public class ClientController {
 
         //nb d'élément
 
-        List<CartItemBean> cartItemsBean = cartInstance.get().getProducts();
+        List<CartItemBean> cartItemsBean = sessionCartBean.get().getProducts();
+        System.out.println("longueur cartItemsBean" + cartItemsBean.size());
 
 
-        List<ProductBean> products = null;
-        Double total=0.0;
+        List<ProductBean> products = new ArrayList<>();
+        double total= 0.0;
 
         for (int i=0; i<cartItemsBean.size(); i++){
 
+            System.out.println("msProductProxy.get(cartItemsBean.get(i).getProductId() = "+msProductProxy.get(cartItemsBean.get(i).getProductId()));
 
             Optional<ProductBean> productBean = msProductProxy.get(cartItemsBean.get(i).getProductId());
-            products.add(productBean.get());
-            total+=cartItemsBean.get(i).getQuantity() * productBean.get().getPrice();
+            if (productBean.isPresent()) {
+                products.add(productBean.get());
+                total += cartItemsBean.get(i).getQuantity() * productBean.get().getPrice();
+            }
 
 
         }
 
-        if (products.size() == 0)
+        if (products == null)
             //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
             return "panier_vide";
 
@@ -157,7 +164,7 @@ public class ClientController {
 
         model.addAttribute("infoProducts", products);
 
-        model.addAttribute("cartInstance", cartInstance.get());
+        model.addAttribute("cartInstance", sessionCartBean.get());
 
         return "panier";
 
