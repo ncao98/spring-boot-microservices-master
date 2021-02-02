@@ -28,6 +28,34 @@ public class ClientController {
     @Autowired
     private MsCartProxy msCartProxy;
 
+    //Créer un cart au démarrage de la page
+    @RequestMapping("/")
+    public String createCart(Model model) {
+
+        // Création d'un Panier de Session
+        ResponseEntity<CartBean> cartBeanInstance = msCartProxy.createNewCart(new CartBean());
+        model.addAttribute("cart", cartBeanInstance.getBody());
+
+        return "redirect:/index/" + cartBeanInstance.getBody().getId();
+    }
+
+    @RequestMapping("/index/{cartId}")
+    public String index(Model model, @PathVariable Long cartId) {
+
+        Optional<CartBean> sessionCartBean = msCartProxy.getCart(cartId);
+
+        if(!sessionCartBean.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not find cart.");
+
+        model.addAttribute("cart", sessionCartBean.get());
+
+        List<ProductBean> products = msProductProxy.list();
+
+        model.addAttribute("products", products);
+
+        return "index";
+    }
+
 
 
 
@@ -92,7 +120,7 @@ public class ClientController {
         return "index";
     }
 
-    @RequestMapping("/cart/{id}")
+    @RequestMapping("/cart/{cart.id}")
     public String getCart(@PathVariable Long id, Model model){
         Optional<CartBean> cartInstance = msCartProxy.getCart(1L);
         // Boucler sur les cart items et pour chaque cart item
