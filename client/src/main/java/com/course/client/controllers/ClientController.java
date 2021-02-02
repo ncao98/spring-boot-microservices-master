@@ -2,8 +2,10 @@ package com.course.client.controllers;
 
 import com.course.client.beans.CartBean;
 import com.course.client.beans.CartItemBean;
+import com.course.client.beans.OrderBean;
 import com.course.client.beans.ProductBean;
 import com.course.client.proxies.MsCartProxy;
+import com.course.client.proxies.MsOrdersProxy;
 import com.course.client.proxies.MsProductProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +49,7 @@ public class ClientController {
 
         model.addAttribute("cart", sessionCartBean.get());
 
-        List<ProductBean> products =  msProductProxy.list();
+        List<ProductBean> products = msProductProxy.list();
 
         model.addAttribute("products", products);
 
@@ -75,54 +77,51 @@ public class ClientController {
         return "detail";
     }
 
+	
     @RequestMapping("/{cartId}/add-product/{productId}")
     public String addProduct (Model model,@PathVariable Long productId, @PathVariable Long cartId){
-
         //Get cart
         Optional<CartBean> sessionCartBean = msCartProxy.getCart(cartId);
         if(!sessionCartBean.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not find cart.");
-
         //Create cartItem
         CartItemBean cartItemBean = new CartItemBean();
         cartItemBean.setProductId(productId);
         cartItemBean.setQuantity(1);
-
         //Add CartItem to Cart
         msCartProxy.addProductToCart(cartId, cartItemBean);
-
         //Go back to index
         List<ProductBean> products = msProductProxy.list();
         model.addAttribute("products", products);
         model.addAttribute("cart", sessionCartBean.get());
-
         return "index";
     }
 
     @RequestMapping("/empty-cart/{cartId}")
-    public String emptyCart(Model model, @PathVariable Long cartId){
+    public String emptyCart(Model model, @PathVariable Long cartId) {
 
         //Récupérer le cart associé à l'id
         Optional<CartBean> cartBean = msCartProxy.getCart(cartId);
         //Récupérer la liste de cartItem associée et la vider
         List<CartItemBean> cartItemBeans = cartBean.get().getProducts();
 
-        cartItemBeans = null ;
+        cartItemBeans = null;
 
         return "index";
     }
 
     @RequestMapping("/delete-cart/{cartId}")
-    public String deleteCart(Model model, @PathVariable Long cartId){
+    public String deleteCart(Model model, @PathVariable Long cartId) {
         //Récupérer le cart associé à l'id
         Optional<CartBean> cartBean = msCartProxy.getCart(cartId);
 
         return "index";
     }
 
-    @RequestMapping("/cart/{id}")
-    public String getCart(@PathVariable Long id, Model model){
-        Optional<CartBean> cartInstance = msCartProxy.getCart(1L);
+
+    @RequestMapping("cart/{cartId}/detailCart")
+    public String getCart(@PathVariable Long cartId, Model model){
+        Optional<CartBean> cartInstance = msCartProxy.getCart(cartId);
         // Boucler sur les cart items et pour chaque cart item
         // Récupérer les informations du produit (avec le msProductProxy) pour chaque cart item (productId)
         // Pour chaque produit récupéré, on ajoute au modèle (model) les informations du produit récupéré pour pouvoir les afficher dans la page
@@ -145,12 +144,12 @@ public class ClientController {
 
             Optional<ProductBean> productBean = msProductProxy.get(cartItemsBean.get(i).getProductId());
             products.add(productBean.get());
-            total+=cartItemsBean.get(i).getQuantity()* productBean.get().getPrice();
+            total+=cartItemsBean.get(i).getQuantity() * productBean.get().getPrice();
 
 
         }
 
-        if (!cartInstance.isPresent())
+        if (products.size() == 0)
             //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
             return "panier_vide";
 
