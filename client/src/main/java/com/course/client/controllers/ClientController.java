@@ -58,6 +58,7 @@ public class ClientController {
     }
 
 
+
     @RequestMapping("/{cartId}/product-detail/{id}")
     public String get(Model model, @PathVariable Long id, @PathVariable Long cartId) {
         //Récupérer le cart de session
@@ -66,8 +67,7 @@ public class ClientController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Could not find cart.");
         model.addAttribute("cart", sessionCartBean.get());
 
-        //Récupérer le produit lié à l'id
-
+          //Récupérer le produit lié à l'id
         Optional<ProductBean> productInstance = msProductProxy.get(id);
 
         if (!productInstance.isPresent())
@@ -156,9 +156,11 @@ public class ClientController {
 
         }
 
+
         if (products == null)
             //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
             return "panier_vide";
+
 
         model.addAttribute("total", total);
 
