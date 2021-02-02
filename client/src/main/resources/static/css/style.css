@@ -56,48 +56,6 @@ p {
     grid-area: stock;
 }
 
-/*page panier*/
-
-
-
-
-.end_list {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 0.2;
-}
-
-.2_btns{
-	display: flex;
-    flex-direction: row;
-    flex-grow: 0.5;
-}
-
-/*Prix total*/
-.h3{
-	font-style: bold;
-}
-.item-j {
-	display: flex;
-    align-items: center;
-    flex-grow: 1;
-}
-/*bouton continuer ses achats*/
-.item-h{
-    display: flex;
-    align-items: flex-start;
-    flex-grow: 0.5;
-}
-
-/*bouton valider le panier*/
-.item-i {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    flex-grow: 0.5;
-}
-/*Page panier terminée*/
-
 .price-btn {
     grid-area: price-btn;
     display: flex;

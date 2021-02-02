@@ -15,16 +15,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
         </ul>
+        <a class="navbar-brand" th:href="@{|/|}">
         <span class="nav-item">
-            <a th:href="@{|cart/{cartId}/detailCart|}">
             <i class="align-middle material-icons">shopping_cart</i>
-                </a>
         </span>
-
+        </a>
     </div>
 </nav>
-<script th:inline="javascript">
-    var cartId = localStorage.getItem('cartId');
-</script>
 </body>
 </html>

@@ -15,5 +15,5 @@ public interface MsProductProxy {
     public List<ProductBean> list();
 
     @GetMapping(value = "/product/{id}")
-    public Optional<ProductBean> get(@PathVariable(value = "id") Long id);
+    public Optional<ProductBean> get(@PathVariable Long id);
 }
