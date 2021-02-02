@@ -18,27 +18,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ClientController {
-
-    @Autowired
-    private MsProductProxy msProductProxy;
+public class ClientController { 
 
     @Autowired
     private MsCartProxy msCartProxy;
 
+    @Autowired
+    private MsProductProxy msProductProxy;
+
     //Créer un cart au démarrage de la page
-    /*@RequestMapping("/")
-    public String createCart(Model model){
-
-        //créer un cart
-        ResponseEntity<CartBean> cartBeanInstance = msCartProxy.createNewCart(new CartBean());
-
-        return "index";
-
-
-    }*/
-
-
     @RequestMapping("/")
     public String createCart(Model model) {
 
