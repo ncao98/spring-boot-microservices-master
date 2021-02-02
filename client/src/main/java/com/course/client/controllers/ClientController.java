@@ -28,27 +28,8 @@ public class ClientController {
     @Autowired
     private MsCartProxy msCartProxy;
 
-    //Créer un cart au démarrage de la page
-    /*@RequestMapping("/")
-    public String createCart(Model model){
-
-        //créer un cart
-        ResponseEntity<CartBean> cartBeanInstance = msCartProxy.createNewCart(new CartBean());
-
-        return "index";
 
 
-    }*/
-
-    @RequestMapping("/")
-    public String index(Model model) {
-
-        List<ProductBean> products =  msProductProxy.list();
-
-        model.addAttribute("products", products);
-
-        return "index";
-    }
 
     @RequestMapping("/product-detail/{id}")
     public String get(@PathVariable Long id, Model model) {
@@ -141,9 +122,9 @@ public class ClientController {
 
         }
 
-        if (!cartInstance.isPresent())
-            //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
-            return "panier_vide";
+        if (products.size() == 0)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified cart doesn't exist");
+            //return "panier_vide";
 
         model.addAttribute("total", total);
 
