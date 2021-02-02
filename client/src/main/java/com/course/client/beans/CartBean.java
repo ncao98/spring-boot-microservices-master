@@ -6,6 +6,10 @@ import java.util.List;
 public class CartBean {
     private Long id;
 
+    public void setProducts(List<CartItemBean> products) {
+        this.products = products;
+    }
+
     private List<CartItemBean> products;
 
     public CartBean(Long id) {
