@@ -11,13 +11,12 @@ public class Cart {
     @GeneratedValue
     private Long id;
 
-    public void setProducts(List<CartItem> products) {
-        this.products = products;
-    }
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<CartItem> products;
 
+    public void setProducts(List<CartItem> products) {
+        this.products = products;
+    }
     public Cart(Long id) {
         this.id = id;
     }

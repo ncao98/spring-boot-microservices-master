@@ -9,49 +9,64 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
+<br>
 <div class="List_articles">
-<h1>Liste des articles : </h1>
-<div class="container mainProduct">
-    <div th:each="product : ${infoProducts}" class="col-md-1 my-1">
-    <div class="item-a">
-        <img th:src="${product.illustration}"/>
-    </div>
+    <h1>Liste des articles : </h1>
+</div>
+<br>
+<div class="container mainCart">
 
-    <div class="information">
-        <div class="item-b">
-            <h1 th:text="${product.name}"></h1>
+    <div th:each="product : ${infoProducts}" class="ines">
+        <div class="item-a">
+            <img th:src="${product.illustration}"/>
         </div>
-        <div class="item-d">
-            <p th:text="${product.description}"></p>
-        </div>
-        <div class="price-btn">
-            <div class="item-c">
-                <p th:text="${product.price}+' €'"></p>
-            </div>
-			 
-			
-		</div>
 
-		<div class="end_list">
-			<div class="item-j">
-                <h3>Prix total : </h3> <p th:text="${total}+' €'"></p>
+        <div class="information">
+            <div class="item-b">
+                <h1 th:text="${product.name}"></h1>
             </div>
-			<div class="2_btns">
-				<div class="item-h">
-					<button>Continuer ses achats</button>
-				</div>
-				<div class="item-i">
-					<button>Valider le panier</button>
-				</div>
-			</div>
-		</div>
-        
+            <div class="item-d">
+                <p th:text="${product.description}"></p>
+            </div>
+            <div class="item-y">
+                <p th:text=" 'Prix :' + ${product.price}+' €'"></p>
+            </div>
+        </div>
     </div>
+    <div class="end_list">
+        <br>
+        <div class="item-j">
+            <div th:text=" 'Prix total : ' + ${total}+ ' €'" class="totalprix"></div>
+        </div>
+        <div class="btns">
+            <div class="item-h">
+                <button type="button" class="btn btn-secondary btn-sm">
+                    <a th:href="@{|/index/${cart.id}|}">
+                        Continuer ses achats
+                    </a>
+                </button>
+            </div>
+            <div class="item-j">
+                <button type="button" class="btn btn-secondary btn-sm">
+                    <a th:href="@{|/empty-cart/${cart.id}|}">
+                        Vider le panier
+                    </a>
+                </button>
+            </div>
+            <div class="item-i">
+                <button type="button" class="btn btn-secondary btn-sm">
+                    <a th:href="@{|/cart/${cart.id}/order|}">
+                        Valider le panier
+                    </a>
+                </button>
+            </div>
+        </div>
+        <br>
     </div>
 </div>
 
-
-
 <div th:replace="fragments/footer :: footer"></div>
+
+
 </body>
 </html>
